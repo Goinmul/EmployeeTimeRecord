@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"edu.handong.csee.java.lecture.multidimensionalarray","l":"TimeRecorder"}]

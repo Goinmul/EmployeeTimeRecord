@@ -1,48 +1,51 @@
 package edu.handong.csee.java.lecture.multidimensionalarray;
-
 import java.util.Scanner;
-
+/**
+ * This is a class for calculating employee's work hours,
+ * by weeks and by each employee's.
+ * @author Hyun Woo Kwon
+ *
+ */
 public class TimeRecorder {
 	
 	private final int NUM_OF_WORK_DAYS = 5; // An employee works for five days from Monday to Friday 
-	private int[][] hours;
-	private enum WeekDays {Monday, Tuesday, Wendesday, Thursday, Friday};
-	private int[] dayHours = new int[WeekDays.values().length]; // int array like [mon][tue][wed][thur][fri]. (work time)
-	private int[] weekHours;
+	private int[][] hours; // instantiating a 2D array
+	private enum WeekDays {Monday, Tuesday, Wendesday, Thursday, Friday}; // enum gives each word a value(integer)
+	private int[] dayHours = new int[WeekDays.values().length]; // integer array like [mon][tue][wed][thur][fri]. (work time)
+	private int[] weekHours; // integer array.
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) { // main function
 		
-		TimeRecorder myTimeRecoder = new TimeRecorder();
+		TimeRecorder myTimeRecoder = new TimeRecorder(); // instantiating the class
 		
-		myTimeRecoder.getData();
-		
+		myTimeRecoder.getData(); // activating all the actions below.
 		myTimeRecoder.computeTotals();
 		myTimeRecoder.printResults();
 
 	}
 	
-	public void getData() {
+	public void getData() { // method for getting data.
 		
-		Scanner myScanner = new Scanner(System.in);
+		Scanner myScanner = new Scanner(System.in); // instantiating scanner.
 		
 		System.out.print("How many employees do you want" +
 								"to process for their work time? ");
 		
-		int numOfEmployees = myScanner.nextInt(); // let's say user put 3
+		int numOfEmployees = myScanner.nextInt(); // let's say user put 3 (I understood this by an example)
 		
 		hours = new int[numOfEmployees][NUM_OF_WORK_DAYS]; // hours[3][5]
 		
 		for(int employeeCount=0; employeeCount < hours.length; employeeCount++) { //hours.length = 3 (iterate 3 times)
 			System.out.println("Input work time for Employee " + (employeeCount+1) + ": "); // giving work times for employee 1, 2, 3
 	
-			for(WeekDays currentDay:WeekDays.values()) { // literate till there is a remaining value in WeekDays. ( iterate 5 times			
+			for(WeekDays currentDay:WeekDays.values()) { // literate till there is a remaining value in WeekDays. ( iterate 5 times	)		
 				System.out.print("  Input work time for Employee " + (employeeCount+1) 
 									+ " on " + currentDay + ": ");
-				hours[employeeCount][currentDay.ordinal()] = myScanner.nextInt(); // User gives value to hours[0][1~5], [1][1~5], [2][1~5]
+				hours[employeeCount][currentDay.ordinal()] = myScanner.nextInt(); // User gives value to hours[0][0~4], [1][0~4], [2][0~4]
 			}
 		}
 		
-		myScanner.close();
+		myScanner.close(); // closing scanner.
 	}
 	
 	
@@ -57,11 +60,7 @@ public class TimeRecorder {
 			for(int employeeCount=0; employeeCount < hours.length; employeeCount++) {	// hours.length is 3 at [3][5]. (iterate 3 times)
 				
 				dayHours[currentDay.ordinal()] = dayHours[currentDay.ordinal()] + hours[employeeCount][currentDay.ordinal()];
-				
-				if(currentDay.ordinal()<3){
-				weekHours[employeeCount] = weekHours[employeeCount] + hours[currentDay.ordinal()][employeeCount];
-				}
-				
+				// giving total hours worked on days. (monday total, tuesday total, ... )
 			}
 			
 		}
@@ -75,6 +74,7 @@ public class TimeRecorder {
 			for(WeekDays currentDay:WeekDays.values()) { // now you know, it should iterate 5 times( for monday ~ friday )
 				weekHours[employeeCount] = weekHours[employeeCount] 
 															+ hours[employeeCount][currentDay.ordinal()];
+				// giving total workhours for each employee.
 			}
 		}
 		
@@ -84,7 +84,7 @@ public class TimeRecorder {
 		
 		System.out.println();
 		
-		// print the first line: Employee   1   2   3   Totals
+		// print the first line: "Employee   1   2   3   Totals"
 		System.out.print("Employee" + addSpace("Employee".length()));
 		
 		for(int employeeCount = 0; employeeCount < hours.length; employeeCount++) { // printing out Employee  1   2   3
